@@ -8,25 +8,28 @@ module CivicDuty
     has_many :dependents, foreign_key: :depends_on_id, class_name: 'Dependency'
     has_many :dependent_projects, through: :dependents, source: :project
 
-    def self.from_name(name)
-      find_or_create_by! name: name
-    end
+    class << self
+      def from_name(name)
+        find_or_create_by! name: name
+      end
+      alias_method :[], :from_name
 
-    def grabbed(depth: 0)
-      super()
-      if depth > 0
-        {
-          dependencies: project_dependencies,
-          dependents: dependent_projects,
-        }.each do |kind, projects|
-          projects.each do |project|
-            project.reload
-            yield project, kind: kind, of: self, depth: depth if block_given?
-            project.grabbed(depth: depth - 1)
+      def grabbed(depth: 0)
+        super()
+        if depth > 0
+          {
+            dependencies: project_dependencies,
+            dependents: dependent_projects,
+          }.each do |kind, projects|
+            projects.each do |project|
+              project.reload
+              yield project, kind: kind, of: self, depth: depth if block_given?
+              project.grabbed(depth: depth - 1)
+            end
           end
         end
+        self
       end
-      self
     end
 
     def libraries_io_data

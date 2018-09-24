@@ -4,6 +4,7 @@ module CivicDuty
     has_many :projects
 
     def self.from_url(url)
+      return nil if url.empty?
       # TODO: Probably dependent on host. Right now assume github
       m = url.match %r{^https?://(?<host>\w+).com/(?<owner>.+)/(?<name>.+)$}
       raise "Failed to parse repository URL '#{url}'" unless m

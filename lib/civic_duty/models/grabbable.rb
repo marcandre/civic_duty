@@ -18,6 +18,7 @@ module CivicDuty
     end
 
     private def grab
+      CivicDuty.log "Grabbing #{self}"
       update_attribute :raw_data, libraries_io_data.symbolize_keys
     end
 

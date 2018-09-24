@@ -8,6 +8,10 @@ module CivicDuty
     has_many :dependents, foreign_key: :depends_on_id, class_name: 'Dependency'
     has_many :dependent_projects, through: :dependents, source: :project
 
+    def inspect
+      "#<CivicDuty::Project '#{name}'>"
+    end
+
     class << self
       def from_name(name)
         find_or_create_by! name: name

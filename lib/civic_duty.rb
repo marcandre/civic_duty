@@ -13,23 +13,38 @@ module CivicDuty
 
   ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || "sqlite3:#{DEFAULT_DB_PATH}")
 
-  def self.libraries_io_api
-    @libraries_io_api ||= LibrariesIO.new
-  end
+  class << self
+    def libraries_io_api
+      @libraries_io_api ||= LibrariesIO.new
+    end
 
-  def self.repo
-    @repo ||= begin
-      vault = ENV['VAULT_REPOSITORY'] || DEFAULT_VAULT_REPOSITORY_REPO_PATH
-      unless Dir.exist?(vault)
-        Dir.mkdir(vault)
-        Rugged::Repository.init_at(vault)
+    def repo
+      @repo ||= begin
+        vault = ENV['VAULT_REPOSITORY'] || DEFAULT_VAULT_REPOSITORY_REPO_PATH
+        unless Dir.exist?(vault)
+          Dir.mkdir(vault)
+          Rugged::Repository.init_at(vault)
+        end
+        Rugged::Repository.new(vault)
       end
-      Rugged::Repository.new(vault)
+    end
+
+    def migrate(direction = :up)
+      migrations = ActiveRecord::Migration.new.migration_context.migrations
+      ActiveRecord::Migrator.new(direction, migrations, nil).migrate
+    end
+
+    attr_accessor :logger
+    def with_logger(&block)
+      previous, @logger = @logger, block
+      yield
+    ensure
+      @logger = previous
+    end
+
+    def log(message)
+      @logger.call(message)
     end
   end
-
-  def self.migrate(direction = :up)
-    migrations = ActiveRecord::Migration.new.migration_context.migrations
-    ActiveRecord::Migrator.new(direction, migrations, nil).migrate
-  end
+  CivicDuty.logger = method(:puts)
 end

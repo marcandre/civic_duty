@@ -14,6 +14,12 @@ module CivicDuty
       end
       alias_method :[], :from_name
 
+      def top
+        CivicDuty.libraries_io_api.search('', platforms: :rubygems).map do |p|
+          from_name(p['name'])
+        end
+      end
+
       def grabbed(depth: 0)
         super()
         if depth > 0

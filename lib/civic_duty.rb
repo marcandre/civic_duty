@@ -45,6 +45,16 @@ module CivicDuty
     def log(message)
       @logger.call(message)
     end
+
+    def start_daemon
+      @daemon_started ||= `docker run --name travis-civic_duty -dit travisci/ci-garnet:packer-1512502276-986baf0  /sbin/init` && true
+    end
+
+    def start_shell
+      `docker exec -it travis-civic_duty bash -l`
+    end
+
+
   end
   CivicDuty.logger = method(:puts)
 end

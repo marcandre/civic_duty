@@ -8,7 +8,7 @@ module CivicDuty
     has_many :dependents, foreign_key: :depends_on_id, class_name: 'Dependency'
     has_many :dependent_projects, through: :dependents, source: :project
 
-    def inspect
+    def to_s
       "#<CivicDuty::Project '#{name}'>"
     end
 
@@ -23,23 +23,24 @@ module CivicDuty
           from_name(p['name'])
         end
       end
+    end
 
-      def grabbed(depth: 0)
-        super()
-        if depth > 0
-          {
-            dependencies: project_dependencies,
-            dependents: dependent_projects,
-          }.each do |kind, projects|
-            projects.each do |project|
-              project.reload
-              yield project, kind: kind, of: self, depth: depth if block_given?
-              project.grabbed(depth: depth - 1)
-            end
+    def grabbed(depth: 0, dependencies: true, dependents: true, sources: false)
+      super()
+      if depth > 0
+        {
+          dependencies: dependencies ? project_dependencies : [],
+          dependents: dependents ? dependent_projects : [],
+        }.each do |kind, projects|
+          projects.each do |project|
+            project.reload
+            yield project, kind: kind, of: self, depth: depth if block_given?
+            project.grabbed(depth: depth - 1, dependencies: dependencies, dependents: dependents, sources: sources)
           end
         end
-        self
       end
+      repository&.reset! if sources
+      self
     end
 
     def libraries_io_data

@@ -26,6 +26,7 @@ module CivicDuty
 
     # Repository methods (move somewhere else?)
     def reset!
+      CivicDuty.log "Fetching #{owner}/#{name}"
       remote.fetch(remote_main_branch_name)
       create_branch(force: true)
     end

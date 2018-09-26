@@ -16,7 +16,7 @@ module CivicDuty
     end
 
     def remote_name
-      "#{owner}.#{name}"
+      "#{name}.#{owner}"
     end
 
     def remote_url

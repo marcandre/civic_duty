@@ -39,7 +39,7 @@ module CivicDuty
           end
         end
       end
-      repository&.reset! if sources
+      repository&.fetch if sources
       self
     end
 

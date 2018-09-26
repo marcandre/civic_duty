@@ -30,13 +30,18 @@ module CivicDuty
 
     # Repository methods (move somewhere else?)
     def reset!
+      fetch&.create_branch(force: true)
+    end
+
+    def fetch
       CivicDuty.log "Fetching #{owner}/#{name}"
       remote.fetch(remote_main_branch_name)
-      create_branch(force: true)
+      self
     end
 
     def checkout!
       repo.checkout(branch_name, force: true)
+      self
     end
 
     def remote
@@ -49,6 +54,7 @@ module CivicDuty
 
     def create_branch(**o)
       repo.branches.create(remote_name, remote_source, **o)
+      self
     end
 
     def branch_name

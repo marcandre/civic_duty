@@ -19,6 +19,10 @@ module CivicDuty
       "#{name}.#{owner}"
     end
 
+    def to_s
+      "#<CivicDuty::Repository '#{remote_name}'>"
+    end
+
     def remote_url
       # TODO: Probably dependent on host. Right now assume github
       "https://#{host}.com/#{owner}/#{name}.git"

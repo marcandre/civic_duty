@@ -13,7 +13,11 @@ module CivicDuty
     end
 
     def grabbed
-      grab unless grabbed?
+      begin
+        grab unless grabbed?
+      rescue TLAW::API::Error => e
+        CivicDuty.log e
+      end
       self
     end
 
@@ -24,12 +28,11 @@ module CivicDuty
 
     def raw_data=(data)
       super
-      assign_attributes(process_raw_data(**data))
+      assign_attributes(process_raw_data(**data)) if data
     end
 
-    private def process_raw_data(**)
-      # Override if need to use raw_data
-      {}
+    private def process_raw_data(**values)
+      values.slice(*Repository.column_names.map(&:to_sym))
     end
 
     private def api

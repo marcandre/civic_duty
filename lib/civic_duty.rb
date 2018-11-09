@@ -6,7 +6,12 @@ autoload :Rugged, 'rugged'
 module CivicDuty
   extend RequireRelativeDir
   require_relative 'civic_duty/version'
+  require_relative 'civic_duty/model'
   require_relative_dir 'civic_duty/models'
+
+  require_relative_dir 'civic_duty/step_helpers'
+  require_relative 'civic_duty/job_runner'
+  require_relative_dir 'civic_duty/job_runners'
 
   DEFAULT_DB_PATH = './.vault.sqlite3'
   DEFAULT_VAULT_REPOSITORY_REPO_PATH = './vault'
@@ -15,22 +20,20 @@ module CivicDuty
 
   class << self
     def libraries_io_api
-      @libraries_io_api ||= LibrariesIO.new
+      @libraries_io_api ||= LibrariesIO.new(per_page: 100)
     end
 
-    def repo
-      @repo ||= begin
-        vault = ENV['VAULT_REPOSITORY'] || DEFAULT_VAULT_REPOSITORY_REPO_PATH
-        unless Dir.exist?(vault)
-          Dir.mkdir(vault)
-          Rugged::Repository.init_at(vault)
-        end
-        Rugged::Repository.new(vault)
+    def vault_path
+      @vault ||= begin
+        p = Pathname(ENV['VAULT_REPOSITORY'] || DEFAULT_VAULT_REPOSITORY_REPO_PATH)
+        p.mkdir unless p.exist?
+        p
       end
     end
 
     def migrate(direction = :up)
       migrations = ActiveRecord::Migration.new.migration_context.migrations
+      migrations = [migrations.last] if direction == :down
       ActiveRecord::Migrator.new(direction, migrations, nil).migrate
     end
 

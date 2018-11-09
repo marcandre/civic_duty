@@ -17,9 +17,11 @@ class InitialSetup < ActiveRecord::Migration[5.0]
     end
 
     create_table :repositories do |t|
+      t.string :type
       t.string :host
       t.string :owner
       t.string :name
+      t.integer :size
       t.text :raw_data
       t.timestamps
     end

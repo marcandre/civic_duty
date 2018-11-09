@@ -1,5 +1,5 @@
 module CivicDuty
-  class Project < ActiveRecord::Base
+  class Project < Model
     include Grabbable
     belongs_to :repository
     has_many :dependencies
@@ -49,13 +49,13 @@ module CivicDuty
       )
     end
 
-    private def process_raw_data(rank:, repository_url:, dependencies: [], dependents: [], **)
+    private def process_raw_data(repository_url:, dependencies: [], dependents: [], **)
       handle_dependencies(dependencies, self.dependencies, :depends_on)
       handle_dependencies(dependents, self.dependents, :project)
 
       {
-        rank: rank,
         repository: Repository.from_url(repository_url),
+        **super
       }
     end
 

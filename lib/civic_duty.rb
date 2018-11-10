@@ -1,6 +1,8 @@
 require 'active_record'
 require 'require_relative_dir'
 require 'libraries_io'
+require 'parser/current'
+
 autoload :Rugged, 'rugged'
 
 module CivicDuty

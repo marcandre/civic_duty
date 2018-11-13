@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "libraries_io"
+  spec.add_runtime_dependency "libraries_io", "~> 0.9"
   spec.add_runtime_dependency "thor"
   spec.add_runtime_dependency "with_progress"
   spec.add_runtime_dependency "activerecord"

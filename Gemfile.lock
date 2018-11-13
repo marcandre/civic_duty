@@ -3,7 +3,7 @@ PATH
   specs:
     civic_duty (0.1.0)
       activerecord
-      libraries_io
+      libraries_io (~> 0.9)
       parser
       require_relative_dir
       rugged
@@ -41,7 +41,7 @@ GEM
       faraday (>= 0.7.4, < 1.0)
     i18n (1.1.1)
       concurrent-ruby (~> 1.0)
-    libraries_io (0.1.0)
+    libraries_io (0.9.0)
       tlaw
     method_source (0.9.1)
     minitest (5.11.3)

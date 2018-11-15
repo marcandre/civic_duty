@@ -10,9 +10,10 @@ module CivicDuty
       def from_url(url)
         return nil if url.empty?
         # TODO: Dependent on host. Right now assume github
-        m = url.match %r{^https?://(?<host>\w+).com/(?<owner>.+)/(?<name>.+)$}
+        m = url.match %r{^https?://(?<host>\w+).\w+/(?<owner>.+)/(?<name>.+)$}
         raise "Failed to parse repository URL '#{url}'" unless m
-        GithubRepository.find_or_create_by! m.named_captures
+        factory = CivicDuty.const_get "#{m[:host].capitalize}Repository"
+        factory.find_or_create_by! m.named_captures
       end
     end
 

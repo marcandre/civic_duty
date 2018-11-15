@@ -1,7 +1,7 @@
 module CivicDuty
   require_relative 'repository'
 
-  class GithubRepository < Repository
+  class GitRepository < Repository
     def remote_name
       'origin'
     end
@@ -56,7 +56,7 @@ module CivicDuty
     end
 
     def remote_url
-      "https://#{host}.com/#{owner}/#{name}.git"
+      raise NotImplemented
     end
 
     def repo
@@ -67,6 +67,18 @@ module CivicDuty
         end
         Rugged::Repository.new(path.to_s)
       end
+    end
+  end
+
+  class GithubRepository < GitRepository
+    def remote_url
+      "https://#{host}.com/#{owner}/#{name}.git"
+    end
+  end
+
+  class BitbucketRepository < GitRepository
+    def remote_url
+      "https://#{host}.org/#{owner}/#{name}"
     end
   end
 end

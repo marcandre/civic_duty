@@ -18,10 +18,18 @@ module CivicDuty
       end
       alias_method :[], :from_name
 
-      def top
-        CivicDuty.libraries_io_api.search('', platforms: :rubygems).map do |p|
-          from_name(p['name'])
-        end
+      def top(n = 100)
+        pages = n.div(100) + 1
+        (1..pages).flat_map do |page|
+          CivicDuty.libraries_io_api.search(
+            '',
+            platforms: :rubygems,
+            page: page,
+            per_page: [n, 100].min,
+          ).map do |p|
+            from_name(p['name'])
+          end
+        end.first(n)
       end
     end
 

@@ -32,7 +32,7 @@ module CivicDuty
     end
 
     private def process_raw_data(**values)
-      values.slice(*Repository.column_names.map(&:to_sym))
+      values.slice(*self.class.column_names.map(&:to_sym))
     end
 
     private def api

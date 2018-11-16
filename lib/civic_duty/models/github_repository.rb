@@ -12,7 +12,7 @@ module CivicDuty
     end
 
     def fetch
-      CivicDuty.log "Fetching #{owner}/#{name}"
+      CivicDuty.log "Fetching #{folder_name}"
       remote.fetch(remote_main_branch_name)
       self
     end

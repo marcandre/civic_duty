@@ -1,5 +1,4 @@
 require_relative '../spec_helper'
-require 'rspec/expectations'
 
 module CivicDuty
   RSpec::Matchers.define :match_method do |name, with_receiver: ANY, for_code:|

@@ -13,4 +13,4 @@ module CivicDuty
   end
 end
 
-# matcher: NodeMatcher.new(type: [:send, :csend], 0 => nil, 1 => :autoload)
+# matcher: Matcher::Node.new(type: [:send, :csend], 0 => nil, 1 => :autoload)

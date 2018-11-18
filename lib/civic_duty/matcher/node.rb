@@ -1,5 +1,5 @@
 module CivicDuty
-  class NodeMatcher
+  class Matcher::Node
     def initialize(type: nil, nb_args: nil, **args)
       @type = type
       @nb_args = nb_args

@@ -1,8 +1,8 @@
 module CivicDuty
-  class AnyMatcher
+  class Matcher::Any
     def ===(obj)
       true
     end
   end
-  ANY = AnyMatcher.new.freeze
+  ANY = Matcher::Any.new.freeze
 end

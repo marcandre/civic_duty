@@ -14,7 +14,6 @@ module CivicDuty
   require_relative_dir 'civic_duty/step_helpers'
   require_relative 'civic_duty/job_runner'
   require_relative_dir 'civic_duty/job_runners'
-  require_relative_dir 'civic_duty/matchers'
   require_relative_dir 'civic_duty'
 
   DEFAULT_DB_PATH = './.vault.sqlite3'

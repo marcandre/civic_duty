@@ -22,5 +22,26 @@ module CivicDuty
     class One < Composition
       COMPOSITION_METHOD = :one?
     end
+
+    class Block
+      def initialize(&block)
+        binding.pry
+        raise ArgumentError, "expected a block of arity one" unless block && block.arity == 1
+        @block = block
+      end
+      def ===(obj)
+        @block.call(obj)
+      end
+    end
+
+    def and(*matchers, &block)
+      matchers.push(Block.new(&block)) if block
+      And.new(*matchers)
+    end
+
+    def or(*matchers, &block)
+      matchers.push(Block.new(&block)) if block
+      Or.new(*matchers)
+    end
   end
 end

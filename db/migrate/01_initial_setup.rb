@@ -22,6 +22,8 @@ class InitialSetup < ActiveRecord::Migration[5.0]
       t.string :owner
       t.string :name
       t.integer :size
+      t.string :scm
+      t.string :default_branch
       t.text :raw_data
       t.timestamps
     end

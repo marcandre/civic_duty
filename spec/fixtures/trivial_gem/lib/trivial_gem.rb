@@ -2,7 +2,7 @@ require_relative "trivial_gem/version"
 
 module TrivialGem
   autoload :BAR, 'trivial_gem/bar'
-  autoload :FOO, 'trivial_gem/foo.rb'
+  Object.autoload :FOO, 'trivial_gem/foo.rb'
   autoload :JSON, 'json'
 
   def self.hello

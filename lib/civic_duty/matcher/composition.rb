@@ -35,12 +35,12 @@ module CivicDuty
 
     def and(*matchers, &block)
       matchers.push(Block.new(&block)) if block
-      And.new(*matchers)
+      And.new(self, *matchers)
     end
 
     def or(*matchers, &block)
       matchers.push(Block.new(&block)) if block
-      Or.new(*matchers)
+      Or.new(self, *matchers)
     end
   end
 end

@@ -2,7 +2,8 @@ module CivicDuty
   class NodeEnumerator
     include Enumerable
 
-    def initialize(source)
+    def initialize(path: nil, source: path.read)
+      @path = path
       @source = source
     end
 
@@ -26,7 +27,7 @@ module CivicDuty
     end
 
     private def parse
-      buffer = ::Parser::Source::Buffer.new('')
+      buffer = ::Parser::Source::Buffer.new(@path || '')
       buffer.source = @source
       ast = parser.parse buffer
     end

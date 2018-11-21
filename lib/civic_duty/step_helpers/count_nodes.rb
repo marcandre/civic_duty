@@ -2,7 +2,7 @@ module CivicDuty
   module StepHelpers
     def count_nodes(dir, &matcher)
       each_ruby_file(dir).sum do |path|
-        NodeEnumerator.new(path.read).each.count(&matcher)
+        NodeEnumerator.new(path: path).each.count(&matcher)
       end
     end
 

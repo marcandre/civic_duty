@@ -15,9 +15,5 @@ module CivicDuty
           matcher === value
         end
     end
-
-    def to_proc
-      method(:===).to_proc
-    end
   end
 end

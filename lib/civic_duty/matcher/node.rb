@@ -7,6 +7,7 @@ module CivicDuty
     end
 
     def ===(node)
+      (node.is_a? ::AST::Node) &&
       (@type.nil? || @type === node.type) &&
         (@nb_args.nil? || @nb_args === node.children.size) &&
         @args.all? do |key, matcher|

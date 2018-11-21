@@ -7,8 +7,8 @@ module CivicDuty
     end
   end
 
-  RSpec.describe MethodMatcher do
-    subject { MethodMatcher }
+  RSpec.describe Matcher::Method do
+    subject { described_class }
     it { should match_method :foo, for_code: 'foo' }
 
     it { should match_method 'foo', for_code: 'foo(42)' }

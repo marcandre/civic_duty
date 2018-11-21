@@ -48,7 +48,8 @@ module CivicDuty
     end
 
     def ready
-      fetch! # TODO: Very wrong
+      #checkout! # TODO: Very wrong
+      self
     end
 
     def path
@@ -64,7 +65,7 @@ module CivicDuty
     end
 
     def repo
-      @repo ||= begin
+      begin
         unless path.exist?
           path.mkdir
           Rugged::Repository.init_at(path.to_s) # TODO: https://github.com/libgit2/rugged/pull/769

@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'rspec/its'
 require 'rspec/expectations'
 ENV['DATABASE_URL'] = 'sqlite3::memory:'
+ENV['VAULT_REPOSITORY'] = "#{__dir__}/fixtures"
 require 'civic_duty'
 require 'vcr'
 

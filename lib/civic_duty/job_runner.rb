@@ -13,14 +13,14 @@ module CivicDuty
 
     def run(step)
       CivicDuty.log "Initiating step '#{step}'"
-      repository.checkout!
+      repository.ready
       build = task.builds.create! step: step, status: :running
       build.update_attributes!(**_run(step), output: output)
       CivicDuty.log "Finished step '#{step}': #{build.status}"
     end
 
     private def repository
-      project.grabbed.repository
+      project.ready.repository
     end
 
     private def path
@@ -50,16 +50,27 @@ module CivicDuty
     class << self
       attr_reader :steps, :stages
 
-      def step(step_name = nil, **mapping)
-        raise ArgumentError, "Pass `step_name` or `step_name: :method`" if mapping.size != (step_name ? 0 : 1)
-        unless step_name
-          step_name, alias_name = mapping.first
+      def step(step_name, *args)
+        if step_name.is_a?(Hash)
+          step_name, alias_name = step_name.first
           alias_method step_name, alias_name
         end
         (@steps ||= []) << step_name
+        define_argument_passing(step_name, *args) unless args.empty?
         /^(get|find|produce)_(?<accessor>\w+)$/ =~ step_name
         define_step_accessor(step_name, accessor) if accessor
         step_name
+      end
+
+      private def define_argument_passing(step_name, *args)
+        args_sig = args.map.with_index{|a, i| "arg_#{i}=#{a}"}.join(', ')
+        args_call = args.map.with_index{|a, i| "arg_#{i}"}.join(', ')
+        prepend mod = Module.new
+        mod.class_eval <<-EVAL, __FILE__, __LINE__ + 1
+          def #{step_name}(#{args_sig})
+            super(#{args_call})
+          end
+        EVAL
       end
 
       private def define_step_accessor(step_name, accessor)

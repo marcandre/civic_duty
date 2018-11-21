@@ -28,5 +28,27 @@ module CivicDuty
     def to_s
       "#<#{self.class} '#{folder_name}'>"
     end
+
+    def ready?
+      raise NotImplementedError
+    end
+
+    def ready
+      raise NotImplementedError
+    end
+  end
+
+  class ManualRepository < Repository
+    def ready?
+      true
+    end
+
+    def ready
+      self
+    end
+
+    def path
+      CivicDuty.vault_path.join name
+    end
   end
 end

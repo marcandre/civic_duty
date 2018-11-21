@@ -1,7 +1,9 @@
 module CivicDuty
-  class CountOccurrences < Job::Runner
+  class CountNodes < Job::Runner
     param :matcher
 
-    step :count_nodes
+    step def count_nodes
+      super(path, &matcher)
+    end
   end
 end

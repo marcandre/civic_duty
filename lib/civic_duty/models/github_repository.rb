@@ -43,8 +43,12 @@ module CivicDuty
       "refs/remotes/#{remote_name}/#{remote_main_branch_name}"
     end
 
-    def ok?
+    def ready?
       path.exist? && repo.ref(remote_ref)
+    end
+
+    def ready
+      fetch! # TODO: Very wrong
     end
 
     def path

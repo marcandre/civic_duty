@@ -33,6 +33,11 @@ module CivicDuty
       end
     end
 
+    def ready
+      return self if repository
+      grabbed
+    end
+
     def grabbed(depth: 0, dependencies: true, dependents: true, sources: false)
       super()
       if depth > 0

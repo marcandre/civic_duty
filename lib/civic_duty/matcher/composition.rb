@@ -25,7 +25,6 @@ module CivicDuty
 
     class Block
       def initialize(&block)
-        binding.pry
         raise ArgumentError, "expected a block of arity one" unless block && block.arity == 1
         @block = block
       end

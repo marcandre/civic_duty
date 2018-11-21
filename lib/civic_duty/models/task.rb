@@ -23,10 +23,10 @@ module CivicDuty
     end
 
     def can_run?
-      !finished? && project.repository.ok?
+      !finished? && project.repository.ready?
     end
 
-    def step_result(step)
+    def step_result(step = nil)
       last_build(step).result
     end
 

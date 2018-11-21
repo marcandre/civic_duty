@@ -24,5 +24,7 @@ module CivicDuty
     it { should_not match_method :foo, with_receiver: nil, for_code: '42.foo' }
 
     it { should match_method :foo, with_receiver: nil, for_code: 'foo 42' }
+
+    it { should match_method :foo, with_receiver: nil, for_code: 'foo 42' }
   end
 end

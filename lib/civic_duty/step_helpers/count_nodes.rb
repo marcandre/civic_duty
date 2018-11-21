@@ -7,7 +7,7 @@ module CivicDuty
     end
 
     private def each_ruby_file(dir, &block)
-      return to_enum :each_ruby_file unless block_given?
+      return to_enum :each_ruby_file, dir unless block_given?
       Pathname.glob(dir.join('**/*.rb'), &block)
     end
   end

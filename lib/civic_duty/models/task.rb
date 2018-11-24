@@ -27,7 +27,7 @@ module CivicDuty
     end
 
     def step_result(step = nil)
-      last_build(step).result
+      last_build(step)&.result
     end
 
     def run

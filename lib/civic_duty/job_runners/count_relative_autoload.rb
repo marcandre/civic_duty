@@ -1,7 +1,7 @@
 module CivicDuty
   class CountRelativeAutoload < Job::Runner
     step def count_relative_autoload
-      matcher = Matcher::Method.new(:autoload)
+      matcher = Matcher::Send.new(:autoload)
       {
         all:      count_nodes(path, &matcher),
         relative: count_nodes(path, &matcher.and {|node| is_relative_autoload?(node) }),

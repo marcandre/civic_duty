@@ -2,7 +2,7 @@ module CivicDuty
   require_relative 'node'
 
   module Matcher
-    class Method < Node
+    class Send < Node
       def initialize(method_name, receiver: ANY)
         super(
           type: Set[:send, :csend],

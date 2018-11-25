@@ -16,8 +16,8 @@ module CivicDuty
   require_relative_dir 'civic_duty/job_runners'
   require_relative_dir 'civic_duty'
 
-  DEFAULT_DB_PATH = './.vault.sqlite3'
   DEFAULT_VAULT_REPOSITORY_REPO_PATH = './vault'
+  DEFAULT_DB_PATH = "#{DEFAULT_VAULT_REPOSITORY_REPO_PATH}/.vault.sqlite3"
 
   ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || "sqlite3:#{DEFAULT_DB_PATH}")
 

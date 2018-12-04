@@ -23,14 +23,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "libraries_io", "~> 0.9"
-  spec.add_runtime_dependency "thor"
-  spec.add_runtime_dependency "with_progress"
   spec.add_runtime_dependency "activerecord"
-  spec.add_runtime_dependency "sqlite3"
+  spec.add_runtime_dependency "libraries_io", "~> 0.9"
   spec.add_runtime_dependency "require_relative_dir"
   spec.add_runtime_dependency "rugged"
   spec.add_runtime_dependency "parser"
+  spec.add_runtime_dependency "sqlite3"
+  spec.add_runtime_dependency "thor"
+  spec.add_runtime_dependency "with_progress"
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"

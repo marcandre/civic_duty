@@ -3,7 +3,8 @@ require_relative '../spec_helper'
 module CivicDuty
   RSpec::Matchers.define :match_send do |name, with_receiver: ANY, for_code:|
     match do |klass|
-      klass.new(name, receiver: with_receiver) === ::Parser::CurrentRuby.parse(for_code)
+      ast = CivicDuty.parse(source: for_code)
+      klass.new(name, receiver: with_receiver) === ast
     end
   end
 

@@ -60,7 +60,18 @@ module CivicDuty
       `docker exec -it travis-civic_duty bash -l`
     end
 
+    def parser
+      ::Parser::CurrentRuby.new.tap do |parser|
+        parser.diagnostics.all_errors_are_fatal = false
+        parser.diagnostics.ignore_warnings      = true
+      end
+    end
 
+    def parse(path: nil, source: path.read)
+      buffer = ::Parser::Source::Buffer.new(path || '')
+      buffer.source = source
+      parser.parse buffer
+    end
   end
   CivicDuty.logger = method(:puts)
 end

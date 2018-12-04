@@ -21,17 +21,8 @@ module CivicDuty
       end
     end
 
-    private def parser
-      ::Parser::CurrentRuby.new.tap do |parser|
-        parser.diagnostics.all_errors_are_fatal = false
-        parser.diagnostics.ignore_warnings      = true
-      end
-    end
-
     private def parse
-      buffer = ::Parser::Source::Buffer.new(@path || '')
-      buffer.source = @source
-      ast = parser.parse buffer
+      CivicDuty.parse path: @path, source: @source
     end
   end
 end

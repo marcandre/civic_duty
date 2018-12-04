@@ -2,6 +2,7 @@ require 'active_record'
 require 'require_relative_dir'
 require 'libraries_io'
 require 'parser/current'
+require 'rubocop'
 require 'set'
 
 autoload :Rugged, 'rugged'
@@ -61,7 +62,7 @@ module CivicDuty
     end
 
     def parser
-      ::Parser::CurrentRuby.new.tap do |parser|
+      ::Parser::CurrentRuby.new(::RuboCop::AST::Builder.new).tap do |parser|
         parser.diagnostics.all_errors_are_fatal = false
         parser.diagnostics.ignore_warnings      = true
       end

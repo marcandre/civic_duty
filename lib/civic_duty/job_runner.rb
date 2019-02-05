@@ -50,6 +50,10 @@ module CivicDuty
     class << self
       attr_reader :steps, :stages
 
+      def runner_class_name
+        name.gsub!(/^CivicDuty::/, '')
+      end
+
       def step(step_name, *args)
         if step_name.is_a?(Hash)
           step_name, alias_name = step_name.first

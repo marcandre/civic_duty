@@ -10,7 +10,7 @@ module CivicDuty
     end
 
     def runner_class=(klass)
-      self.runner_class_name = klass.name.gsub!(/^CivicDuty::/, '')
+      self.runner_class_name = klass.runner_class_name
     end
 
     def create_tasks_for(projects)

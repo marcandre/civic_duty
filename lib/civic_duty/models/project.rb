@@ -8,6 +8,8 @@ module CivicDuty
     has_many :dependents, foreign_key: :depends_on_id, class_name: 'Dependency'
     has_many :dependent_projects, through: :dependents, source: :project
 
+    scope :default_set, -> { where.not(repository_id: nil) } # TODO
+
     def to_s
       "#<CivicDuty::Project '#{name}'>"
     end

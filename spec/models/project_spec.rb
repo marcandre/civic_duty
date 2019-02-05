@@ -53,5 +53,15 @@ module CivicDuty
         expect(processed).to include(*%w[deep-cover parser backports rubocop])
       end
     end
+
+    describe 'default_set and top' do
+      subject { Project.default_set }
+      its(:count) { should == 0 }
+
+      describe 'with a project loaded' do
+        before { project.grabbed }
+        its(:count) { should == 1 }
+      end
+    end
   end
 end

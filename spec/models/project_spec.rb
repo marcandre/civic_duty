@@ -1,7 +1,9 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec.describe Project, vcr: {record: :new_episodes, cassette_name: 'shared'} do
+  record = ENV['R'] ? :new_episodes : :none
+
+  RSpec.describe Project, vcr: {record: record, cassette_name: 'shared'} do
     let(:project) { Project.from_name('deep-cover-core') }
     subject { project }
 

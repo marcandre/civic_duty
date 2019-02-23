@@ -43,7 +43,11 @@ module CivicDuty
     end
 
     private def run_step(step)
-      job.runner_class.new(self).run(step)
+      job_runner.run(step)
+    end
+
+    private def job_runner
+      job.runner_class.new(self)
     end
   end
 end

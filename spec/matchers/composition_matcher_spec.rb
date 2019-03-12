@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec::Matchers.define :match_composition do |*matchers, for_value:, &block|
+  RSpec::Matchers.define :match_composition do |*matchers, for_value:, block: nil|
     match do |klass|
       klass.new(*matchers, &block) === for_value
     end
@@ -35,9 +35,13 @@ module CivicDuty
     end
 
     describe Matcher::Block do
-      it { should match_composition(for_value: 'aaa') do |value| value.should == 'aaa'; true; end }
+      it { should match_composition(for_value: 'aaa',
+            block: -> (value) { value.should == 'aaa'; true })
+         }
 
-      it { should_not match_composition(for_value: 'aaa') do |value| value.should == 'aaa'; false; end }
+      it { should_not match_composition(for_value: 'aaa',
+            block: -> (value) { should == 'aaa'; false })
+         }
     end
   end
 end

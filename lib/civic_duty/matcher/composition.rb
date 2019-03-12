@@ -25,7 +25,8 @@ module CivicDuty
 
     class Block
       def initialize(&block)
-        raise ArgumentError, "expected a block of arity one" unless block && block.arity == 1
+        raise ArgumentError, "expected a block" unless block
+        raise ArgumentError, "invalid arity #{block.arity}" unless block.arity == 1 || block.arity <= -1
         @block = block
       end
       def ===(obj)

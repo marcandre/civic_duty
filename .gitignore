@@ -12,3 +12,4 @@
 .libraries_io_api_key
 .vault.sqlite3
 vault
+Gemfile.lock

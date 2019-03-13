@@ -20,5 +20,19 @@ module CivicDuty
       end
       its(:step_result) { should eq 3 }
     end
+
+    describe '.[]' do
+      before { projects }
+      let(:job) { runner_class['(int)'] }
+      subject { job }
+
+      its(:params) { should == {matcher: Matcher::Node.new('(int)')} }
+
+      it 'creates the job and assigns it to default_set' do
+        job.tasks.map(&:project).should =~ Project.default_set
+      end
+
+      its(:id) { should == runner_class['(int)'].id }
+    end
   end
 end

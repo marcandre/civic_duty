@@ -5,5 +5,9 @@ module CivicDuty
     step def count_nodes
       super(path, &matcher)
     end
+
+    def self.[](pattern)
+      super(matcher: Matcher::Node.new(pattern))
+    end
   end
 end

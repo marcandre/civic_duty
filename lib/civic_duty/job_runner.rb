@@ -54,6 +54,16 @@ module CivicDuty
         name.gsub!(/^CivicDuty::/, '')
       end
 
+      # Lookup existing job or create it
+      def [](**opts)
+        Job.find_or_create_by!(
+          runner_class_name: runner_class_name,
+          params: opts,
+        ) do |job|
+          job.tap(&:save!).create_tasks_for(Project.default_set)
+        end
+      end
+
       def step(step_name, *args)
         if step_name.is_a?(Hash)
           step_name, alias_name = step_name.first

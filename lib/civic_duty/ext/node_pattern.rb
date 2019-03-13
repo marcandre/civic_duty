@@ -23,6 +23,11 @@ module CivicDuty
         pattern
       end
 
+      def ==(other)
+        other.is_a?(::RuboCop::NodePattern) && other.pattern == pattern
+      end
+      alias eql? ==
+
       def to_s
         "#<#{self.class} #{pattern}>"
       end

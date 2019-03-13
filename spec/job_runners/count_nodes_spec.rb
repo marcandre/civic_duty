@@ -13,8 +13,8 @@ module CivicDuty
     subject { task }
 
     it 'should be a success' do
-        puts task.builds.last.output unless task.status == :success
-        task.status.should eq :success
+      puts task.builds.last.output unless task.status == :success
+      task.status.should eq :success
     end
     its(:step_result) { should eq 3 }
   end

@@ -42,6 +42,19 @@ module CivicDuty
       self
     end
 
+    def synthesis
+      return status unless status == :success
+      result = job_runner.synthesis if job_runner.respond_to?(:synthesis)
+      result ||= step_result.size if step_result.respond_to?(:size)
+      result ||= status
+    end
+
+    def summary
+      return nil unless status == :success
+      result = job_runner.summary if job_runner.respond_to?(:summary)
+      result ||= step_result
+    end
+
     private def run_step(step)
       job_runner.run(step)
     end

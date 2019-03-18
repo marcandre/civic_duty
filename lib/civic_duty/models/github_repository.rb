@@ -77,7 +77,20 @@ module CivicDuty
 
   class GithubRepository < GitRepository
     def remote_url
-      "https://#{host}.com/#{owner}/#{name}.git"
+      "#{base_url}.git"
+    end
+
+    def base_url
+      "https://#{host}.com/#{owner}/#{name}"
+    end
+
+    def path_summary(path:, from: nil, to: nil)
+      relative_path = path.relative_path_from(self.path).to_s
+      url = "#{base_url}/blob/#{branch_name}/#{relative_path}"
+      if from
+        result << "#L{from}"
+        result << "-L#{to}" if to
+      end
     end
   end
 

@@ -6,7 +6,7 @@ module CivicDuty
         total = code.length
         range = location.expression
         path_summary = yield(
-          path: range.source_buffer.name,
+          path: Pathname(range.source_buffer.name),
           from: range.line,
           to: range.last_line
         ) if block_given?

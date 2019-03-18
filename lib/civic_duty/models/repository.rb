@@ -36,6 +36,14 @@ module CivicDuty
     def ready
       raise NotImplementedError
     end
+
+    def path_summary(path:, from: nil, to: nil)
+      result = path.relative_path_from(CivicDuty.vault_path).to_s
+      if from
+        result << ":#{from}"
+        result << "-#{to}" if to
+      end
+    end
   end
 
   class ManualRepository < Repository

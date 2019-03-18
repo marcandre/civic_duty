@@ -2,12 +2,12 @@ module CivicDuty
   module Ext
     module Node
       def summary(maxlen = 80)
-        expression = source
-        total = expression.length
+        code = source
+        total = code.length
         if total > maxlen
-          "#{expression[0...(maxlen / 2)]} … #{expression[-(maxlen / 2)..-1]}"
+          "#{code[0...(maxlen / 2)]} … #{code[-(maxlen / 2)..-1]}"
         else
-          expression
+          code
         end
       end
     end

@@ -4,11 +4,15 @@ module CivicDuty
       def summary(maxlen = 80)
         code = source
         total = code.length
-        if total > maxlen
-          "#{code[0...(maxlen / 2)]} … #{code[-(maxlen / 2)..-1]}"
-        else
-          code
-        end
+        range = location.expression
+        path_summary = yield(
+          path: range.source_buffer.name,
+          from: range.line,
+          to: range.last_line
+        ) if block_given?
+
+        code = "#{code[0...(maxlen / 2)]} … #{code[-(maxlen / 2)..-1]}" if total > maxlen
+        [path_summary, code].compact.join("\n")
       end
     end
   end

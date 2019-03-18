@@ -71,7 +71,7 @@ module CivicDuty
     end
 
     def parse(path: nil, source: path.read)
-      buffer = ::Parser::Source::Buffer.new(path || '')
+      buffer = ::Parser::Source::Buffer.new(path || '(inline)')
       buffer.source = source
       parser.parse buffer
     end

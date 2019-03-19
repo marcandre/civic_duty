@@ -8,7 +8,7 @@ module CivicDuty
     end
   end
 
-  RSpec.describe Matcher::Send do
+  describe Matcher::Send do
     subject { described_class }
     it { should match_send :foo, for_code: 'foo' }
 

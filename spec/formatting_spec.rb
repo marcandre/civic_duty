@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 module CivicDuty
-  RSpec.describe Formatting do
+  describe Formatting do
     describe :summarize_list do
       subject { Formatting.summarize_list(list) }
       context "on a short list" do

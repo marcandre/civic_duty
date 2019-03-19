@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 module CivicDuty
-  RSpec.describe NodeEnumerator do
+  describe NodeEnumerator do
     let(:source) { 'a = "hello"; b = 42' }
 
     let(:enumerator) { NodeEnumerator.new(source: source) }

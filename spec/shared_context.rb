@@ -1,5 +1,5 @@
 module CivicDuty
-  RSpec.shared_context 'job runner' do
+  shared_context 'job runner' do
     let(:runner_class) { described_class }
     let(:params) { {} }
     let(:repository) { ManualRepository.create! name: 'trivial_gem' }

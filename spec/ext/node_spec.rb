@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec.describe ::RuboCop::AST::Node do
+  describe ::RuboCop::AST::Node do
     let(:source) { '42.to_s' }
     let(:node) { CivicDuty.parse(source: source) }
     subject { node }

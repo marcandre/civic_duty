@@ -5,7 +5,6 @@ ENV['DATABASE_URL'] = 'sqlite3::memory:'
 ENV['VAULT_REPOSITORY'] = "#{__dir__}/fixtures"
 require 'vcr'
 require 'civic_duty'
-require_relative 'shared_context'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
@@ -23,7 +22,11 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
+  config.expose_dsl_globally = true
+
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
   end
 end
+
+require_relative 'shared_context'

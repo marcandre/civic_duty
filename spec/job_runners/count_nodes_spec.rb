@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec.describe CountNodes do
+  describe CountNodes do
     include_context 'job runner'
 
     describe 'from a Job created manually' do

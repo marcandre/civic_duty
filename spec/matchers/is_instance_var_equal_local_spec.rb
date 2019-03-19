@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec.describe Matcher::InstanceVarEqualLocal do
+  describe Matcher::InstanceVarEqualLocal do
     let(:method_name) { :initialize }
     let(:body) { "@a = a"}
     let(:source) { <<-RUBY }

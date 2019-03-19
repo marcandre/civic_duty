@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec.describe CountRelativeAutoload do
+  describe CountRelativeAutoload do
     include_context 'job runner'
     subject { task }
 

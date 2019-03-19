@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec.describe FindNodes do
+  describe FindNodes do
     include_context 'job runner'
 
     let(:params) { {matcher: Matcher::Send.new(:autoload)} }

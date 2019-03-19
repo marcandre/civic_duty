@@ -7,7 +7,7 @@ module CivicDuty
     end
   end
 
-  RSpec.describe Matcher do
+  describe Matcher do
     subject { described_class }
 
     describe Matcher::And do

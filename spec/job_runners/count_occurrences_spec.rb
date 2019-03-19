@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module CivicDuty
-  RSpec.describe CountOccurrences do
+  describe CountOccurrences do
     include_context 'job runner'
     let(:params) { {pattern: 'autoload'} }
     subject { task }

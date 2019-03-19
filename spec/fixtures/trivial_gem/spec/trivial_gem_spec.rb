@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe TrivialGem do
+describe TrivialGem do
   it "has a version number" do
     expect(TrivialGem::VERSION).not_to be nil
   end

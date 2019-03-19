@@ -2,6 +2,8 @@ module CivicDuty
   extend RequireRelativeDir
   require_relative 'ext'
 
+  require_relative 'formatting'
+
   require_relative 'model'
   require_relative_dir 'models'
 

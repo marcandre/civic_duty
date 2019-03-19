@@ -1,10 +1,15 @@
 module CivicDuty
   module Formatting
-    def summarize_list(list, ok: 5, cut_to: 3)
+    def shorten_list(list, ok: 5, cut_to: 3)
       if list.size > ok
         extra = " and #{list.size - cut_to} more"
         list = list.first(cut_to)
       end
+      [list, extra]
+    end
+
+    def summarize_list(list, ok: 5, cut_to: 3)
+      list, extra = shorten_list(list, ok: ok, cut_to: cut_to)
       "#{list.join(", ")}#{extra}"
     end
 

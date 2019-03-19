@@ -15,7 +15,7 @@ module CivicDuty
     end
 
     def status
-      last_build&.status
+      last_build&.status || :pending
     end
 
     def finished?

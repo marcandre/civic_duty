@@ -2,13 +2,7 @@ require_relative '../spec_helper'
 
 module CivicDuty
   RSpec.describe CountRelativeAutoload do
-    let(:runner_class) { described_class }
-    let(:repository) { ManualRepository.create! name: 'trivial_gem' }
-    let(:projects) { Project.create! repository: repository }
-    let(:job) { Job.create!(runner_class: runner_class)
-                .create_tasks_for(projects)
-                .run }
-    let(:task) { job.tasks.first }
+    include_context 'job runner'
     subject { task }
 
     it 'should be a success' do

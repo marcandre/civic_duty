@@ -8,18 +8,7 @@ require 'set'
 autoload :Rugged, 'rugged'
 
 module CivicDuty
-  extend RequireRelativeDir
-  require_relative 'civic_duty/ext'
-
-  require_relative 'civic_duty/formatting'
-
-  require_relative 'civic_duty/model'
-  require_relative_dir 'civic_duty/models'
-
-  require_relative_dir 'civic_duty/step_helpers'
-  require_relative 'civic_duty/job_runner'
-  require_relative_dir 'civic_duty/job_runners'
-  require_relative_dir 'civic_duty'
+  require_relative 'civic_duty/load_all'
 
   DEFAULT_VAULT_REPOSITORY_REPO_PATH = './vault'
   DEFAULT_DB_PATH = "#{DEFAULT_VAULT_REPOSITORY_REPO_PATH}/.vault.sqlite3"

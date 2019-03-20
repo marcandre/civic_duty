@@ -5,6 +5,8 @@ require 'parser/current'
 require 'rubocop'
 require 'set'
 
+require 'backports/2.6.0/kernel/then'
+
 autoload :Rugged, 'rugged'
 
 module CivicDuty

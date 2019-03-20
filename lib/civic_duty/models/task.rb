@@ -10,7 +10,7 @@ module CivicDuty
 
     def last_build(step = nil)
       assoc = builds
-      assoc = build.where(step: step) if step
+      assoc = builds.where(step: step) if step
       assoc.last
     end
 

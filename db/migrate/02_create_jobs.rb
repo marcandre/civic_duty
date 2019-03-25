@@ -6,7 +6,7 @@ class CreateJobs < ActiveRecord::Migration[5.0]
       t.string :step
       t.integer :status
       t.text :output
-      t.text :result
+      t.binary :result
 
       t.timestamps
     end

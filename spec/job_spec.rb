@@ -14,6 +14,7 @@ module CivicDuty
 3: trivial_gem
 
 *** Summaries: ***
+* trivial_gem *
 trivial_gem/lib/trivial_gem.rb:4-4
 autoload :BAR, 'trivial_gem/bar'
 

@@ -50,15 +50,20 @@ module CivicDuty
         .group_by(&:synthesis)
         .sort
       by_synthesis = regroup(by_synthesis) if by_synthesis.size > 7
+      by_synthesis = by_synthesis.reverse.to_h
 
       section 'Completed:',
-        by_synthesis.reverse.map { |(index, tasks)|
+        by_synthesis.map { |(index, tasks)|
           "#{index}: #{summarize_list(project_names(tasks))}"
         }
 
-      tasks, extra = shorten_list(by_synthesis.flat_map(&:last).flatten)
+      by_synthesis.delete(0) # Don't summarize trivial results
+      by_synthesis.delete(nil)
 
-      section 'Summaries:', [*tasks.map(&:summary), *extra]
+      tasks, extra = shorten_list(by_synthesis.values.flatten)
+      summaries = tasks.flat_map { |task| ["* #{task.project.name} *", task.summary] }
+
+      section 'Summaries:', [*summaries, *extra]
     end
 
     private def section(title, values)

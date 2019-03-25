@@ -88,9 +88,10 @@ module CivicDuty
       relative_path = path.relative_path_from(self.path).to_s
       url = "#{base_url}/blob/#{branch_name}/#{relative_path}"
       if from
-        result << "#L{from}"
-        result << "-L#{to}" if to
+        url << "#L#{from}"
+        url << "-L#{to}" if to
       end
+      url
     end
   end
 

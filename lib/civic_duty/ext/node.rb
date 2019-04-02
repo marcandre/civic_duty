@@ -1,6 +1,10 @@
 module CivicDuty
   module Ext
     module Node
+      def procarg_type?
+        type == :procarg0
+      end
+
       def summary(maxlen = 80)
         code = source
         total = code.length

@@ -57,6 +57,7 @@ module CivicDuty
     end
 
     def parser
+      ::RuboCop::AST::Builder.emit_procarg0 = true
       ::Parser::CurrentRuby.new(::RuboCop::AST::Builder.new).tap do |parser|
         parser.diagnostics.all_errors_are_fatal = false
         parser.diagnostics.ignore_warnings      = true

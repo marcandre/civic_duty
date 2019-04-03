@@ -41,6 +41,10 @@ module CivicDuty
       self
     end
 
+    def to_s
+      "#<#{self.class} id: #{id}, project: '#{project&.name}'>"
+    end
+
     private def run_step(step)
       job_runner.run(step)
     end

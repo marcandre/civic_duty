@@ -37,6 +37,18 @@ module CivicDuty
       @report
     end
 
+    def temp(source)
+      Project.temp(source) do |project|
+        yield task = tasks.create!(project: project)
+      ensure
+        task&.destroy
+      end
+    end
+
+    def test(source)
+      temp(source, &:run)
+    end
+
     private def report_by_status(by_status)
       section 'Not completed:', by_status.map { |status, tasks|
         "#{status}: #{summarize_list(project_names(tasks))}"

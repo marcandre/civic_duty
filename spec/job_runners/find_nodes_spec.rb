@@ -19,5 +19,13 @@ Object.autoload :FOO, 'trivial_gem/foo.rb'
 trivial_gem/lib/trivial_gem.rb:6-6
 autoload :JSON, 'json'
     SUMMARY
+
+    describe :test do
+      let(:job) { FindNodes['(block _ (args procarg) ...)'] }
+      let(:block) { 'bar { |x| }' }
+      let(:task) { job.test("def foo; #{block}; end") }
+      subject { task.summary }
+      it { should include block }
+    end
   end
 end

@@ -33,6 +33,14 @@ module CivicDuty
           end
         end.first(n)
       end
+
+      def temp(source)
+        ManualRepository.temp(source) do |repository|
+          yield project = create!(repository: repository, name: 'test')
+        ensure
+          project&.delete
+        end
+      end
     end
 
     def ready

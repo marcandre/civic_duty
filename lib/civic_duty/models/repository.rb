@@ -58,5 +58,17 @@ module CivicDuty
     def path
       CivicDuty.vault_path.join name
     end
+
+    class << self
+      def temp(source)
+        require 'tempfile'
+        Dir.mktmpdir do |dir|
+          Pathname(dir).join("temp.rb").write(source)
+          yield repo = create!(name: dir)
+        ensure
+          repo&.delete
+        end
+      end
+    end
   end
 end

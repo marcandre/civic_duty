@@ -12,7 +12,7 @@ module CivicDuty
     end
 
     def run(step)
-      CivicDuty.log "Initiating step '#{step}' for task #{task.id}"
+      CivicDuty.log "Initiating step '#{step}' for #{task}"
       repository.ready
       build = task.builds.create! step: step, status: :running
       build.update_attributes!(**_run_and_time(step), output: output)

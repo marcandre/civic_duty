@@ -12,12 +12,13 @@ module CivicDuty
     end
 
     def run(step)
+      raise "Step can not be nil" unless step
       CivicDuty.log "Initiating step '#{step}' for #{task}"
       repository.ready
       build = task.builds.create! step: step, status: :running
       build.update_attributes!(**_run_and_time(step), output: output)
       task.builds.reset
-      CivicDuty.log "Finished step '#{step}': #{build.status}"
+      CivicDuty.log "Finished step '#{step}': #{build.status} (#{build.elapsed_time}s)"
     end
 
     private def repository
@@ -46,12 +47,9 @@ module CivicDuty
         status: :success,
         result: send(step),
       }
-    rescue RuntimeError => e
+    rescue StandardError => e
       output << e.to_s
       { status: :failure }
-    rescue Exception => e
-      output << e.to_s << e.backtrace.join("\n")
-      { status: :error }
     end
 
     INITIAL_STAGE = :_started_

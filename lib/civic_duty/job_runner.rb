@@ -15,7 +15,7 @@ module CivicDuty
       CivicDuty.log "Initiating step '#{step}' for task #{task.id}"
       repository.ready
       build = task.builds.create! step: step, status: :running
-      build.update_attributes!(**_run(step), output: output)
+      build.update_attributes!(**_run_and_time(step), output: output)
       CivicDuty.log "Finished step '#{step}': #{build.status}"
     end
 
@@ -30,6 +30,14 @@ module CivicDuty
     private def call_system(cmd)
       output << cmd << "\n"
       `#{cmd}`.tap {|r| output << r}
+    end
+
+    private def _run_and_time(step)
+      starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      {
+        **_run(step),
+        elapsed_time: Process.clock_gettime(Process::CLOCK_MONOTONIC) - starting,
+      }
     end
 
     private def _run(step)

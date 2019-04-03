@@ -16,6 +16,7 @@ module CivicDuty
       repository.ready
       build = task.builds.create! step: step, status: :running
       build.update_attributes!(**_run_and_time(step), output: output)
+      task.builds.reset
       CivicDuty.log "Finished step '#{step}': #{build.status}"
     end
 

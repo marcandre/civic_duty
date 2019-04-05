@@ -26,7 +26,7 @@ module CivicDuty
 
       it { merged[1...-1].to_h.should == {
         [:b, :c] => [4, 5, 3],
-        [:d] => [7],
+        :d => [7],
       } }
     end
   end

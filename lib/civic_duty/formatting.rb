@@ -25,6 +25,7 @@ module CivicDuty
       grouped = grouped.to_a
       regrouped = grouped[top..-(1+bottom)].each_slice(n).map do |groups|
         indices = groups.map(&:first)
+        indices = indices[0] if indices.size == 1
         [indices, groups.map(&:last).reverse.flatten(1)]
       end
       [

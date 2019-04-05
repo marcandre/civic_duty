@@ -14,13 +14,18 @@ module CivicDuty
       "#{list.map(&:to_s).join(", ")}#{extra}"
     end
 
+    def combine_list(object_or_list)
+      return object_or_list unless object_or_list.is_a?(Array)
+      object_or_list.first .. object_or_list.last
+    end
+
     def regroup(grouped, ok: 7, merge: 4, top: 1, bottom: 1)
       return grouped if grouped.size <= ok
       n = ((grouped.size - top - bottom).fdiv(merge)).ceil
       grouped = grouped.to_a
       regrouped = grouped[top..-(1+bottom)].each_slice(n).map do |groups|
         indices = groups.map(&:first)
-        [indices.first .. indices.last, groups.map(&:last).reverse.flatten(1)]
+        [combine_list(indices), groups.map(&:last).reverse.flatten(1)]
       end
       [
         *grouped.first(top),

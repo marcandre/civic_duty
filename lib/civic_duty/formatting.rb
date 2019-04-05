@@ -24,9 +24,9 @@ module CivicDuty
       n = ((grouped.size - top - bottom).fdiv(merge)).ceil
       grouped = grouped.to_a
       regrouped = grouped[top..-(1+bottom)].each_slice(n).map do |groups|
-        indices = groups.map(&:first)
+        indices, values = groups.transpose
         indices = indices[0] if indices.size == 1
-        [indices, groups.map(&:last).reverse.flatten(1)]
+        [indices, values.reverse.flatten(1)]
       end
       [
         *grouped.first(top),

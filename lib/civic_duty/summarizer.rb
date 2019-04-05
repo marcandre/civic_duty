@@ -1,5 +1,7 @@
 module CivicDuty
   class Summarizer < Struct.new(:results, :path_summary_block)
+    include Formatting
+
     def summary
       case result_type
       when [], {}, NilClass
@@ -50,9 +52,14 @@ module CivicDuty
     end
 
     def tally_summary
-      results
-        .sort_by{|key, nb| [-nb, key]}
-        .map { |key, value| "#{key}: #{value}" }
+      regroup(
+        results
+          .group_by { |obj, nb| nb }
+          .transform_values { |obj_nb_pairs| obj_nb_pairs.map(&:first).sort }
+          .sort
+      )
+        .reverse
+        .map { |nb, objects| "#{nb}: #{summarize_list(objects)}" }
         .join("\n")
     end
   end

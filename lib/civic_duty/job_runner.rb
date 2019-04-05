@@ -55,47 +55,10 @@ module CivicDuty
     INITIAL_STAGE = :_started_
 
     def summary
-      results = task.step_result
-      case result_type(results)
-      when [], {}, NilClass
-        'n/a'
-      when [Node]
-        nodes_summary(results)
-      when {Object => Integer}
-        tally_summary(results)
-      else
-        results
-      end
-    end
-
-    private def result_type(results)
-      case results
-      when Array
-        return [] if results.empty?
-        return [Node] if results.all?(Node)
-      when Hash
-        return {} if results.empty?
-        return {Object => Integer} if results.values.all?(Integer)
-      end
-      results.class
-    end
-
-    CAP_NODES = 3
-    private def nodes_summary(results)
-      remainder = results.size - CAP_NODES
-      results
-        .first(CAP_NODES)
-        .map { |r| r.summary(&project.repository.method(:path_summary)) }
-        .tap { |ary| ary << "and #{remainder} other occurences." if remainder > 0 }
-        .join("\n\n")
-        .<<("\n")
-    end
-
-    private def tally_summary(results)
-      results
-        .sort_by{|key, nb| [-nb, key]}
-        .map { |key, value| "#{key}: #{value}" }
-        .join("\n")
+      Summarizer.new(
+        task.step_result,
+        project.repository.method(:path_summary)
+      ).summary
     end
 
     class << self

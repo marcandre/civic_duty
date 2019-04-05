@@ -8,8 +8,9 @@ module CivicDuty
       [list, extra]
     end
 
-    def summarize_list(list, ok: 5, cut_to: 3)
+    def summarize_list(list, ok: 5, cut_to: 3, &block)
       list, extra = shorten_list(list, ok: ok, cut_to: cut_to)
+      list.map!(&block) if block
       "#{list.join(", ")}#{extra}"
     end
 

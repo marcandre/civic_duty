@@ -17,7 +17,7 @@ module CivicDuty
 
     describe :regroup do
       let(:grouped) { {a: [1, 2], b: [3], c: [4, 5], d: [7], e: [8]} }
-      let(:merged) { Formatting.regroup(grouped, merge: 2) }
+      let(:merged) { Formatting.regroup(grouped, ok: 2, merge: 2) }
       subject { merged }
 
       its(:first) { should == grouped.to_a.first }

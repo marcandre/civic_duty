@@ -2,11 +2,12 @@ module CivicDuty
   class Summarizer
     include Formatting
 
-    attr_reader :results, :path_to_s
+    attr_reader :results, :path_to_s, :object_to_s
 
-    def initialize(results, path_to_s: nil)
+    def initialize(results, path_to_s: nil, object_to_s: nil)
       @results = results
       @path_to_s = path_to_s
+      @object_to_s = object_to_s
     end
 
     def summary
@@ -60,7 +61,7 @@ module CivicDuty
 
     def tally_summary
       organized_tally
-        .map { |nb, objects| "#{nb}: #{summarize_list(objects)}" }
+        .map { |nb, objects| "#{nb}: #{summarize_list(objects, &object_to_s)}" }
         .join("\n")
     end
 

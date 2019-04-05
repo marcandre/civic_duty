@@ -17,5 +17,11 @@ module CivicDuty
 [:arg, :arg]: 1
 [:procarg0]: 1
     SUMMARY
+
+    its(:synthesis) { should eq({
+      [] => 2,
+      [:arg, :arg] => 1,
+      [:procarg0] => 1,
+    }) }
   end
 end

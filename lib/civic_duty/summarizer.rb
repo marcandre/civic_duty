@@ -13,6 +13,19 @@ module CivicDuty
       end
     end
 
+    def synthesis
+      case result_type
+      when [], {}, NilClass
+        0
+      when [Node]
+        results.size
+      when {Object => Integer}
+        results
+      else
+        nil
+      end
+    end
+
     def result_type
       case results
       when Array

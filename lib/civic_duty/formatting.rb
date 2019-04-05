@@ -19,19 +19,26 @@ module CivicDuty
       object_or_list.first .. object_or_list.last
     end
 
-    def regroup(grouped, ok: 7, merge: 4, top: 1, bottom: 1)
-      return grouped if grouped.size <= ok
+    def regroup(grouped, ok: 7, merge: 4, top: 1, bottom: 1, sum: false)
+      insert_sum = if sum
+        Proc.new{ |index, list| [index, index * list.size, list] }
+      else
+        :itself
+      end
+
+      return grouped.to_a.map(&insert_sum) if grouped.size <= ok
       n = ((grouped.size - top - bottom).fdiv(merge)).ceil
       grouped = grouped.to_a
       regrouped = grouped[top..-(1+bottom)].each_slice(n).map do |groups|
         indices, values = groups.transpose
+        total = groups.map { |index, list| index * list.size }.sum if sum
         indices = indices[0] if indices.size == 1
-        [indices, values.reverse.flatten(1)]
+        [indices, *total, values.reverse.flatten(1)]
       end
       [
-        *grouped.first(top),
+        *grouped.first(top).map(&insert_sum),
         *regrouped,
-        *grouped.last(bottom),
+        *grouped.last(bottom).map(&insert_sum),
       ]
     end
 

@@ -28,6 +28,17 @@ module CivicDuty
         [:b, :c] => [4, 5, 3],
         :d => [7],
       } }
+
+      context 'for a tally' do
+        let(:grouped) { {0 => %w[ø], 1 => %w[a b], 2 => %w[c d e], 3 => %w[f]} }
+        let(:merged) { Formatting.regroup(grouped, merge: 2, ok: 0, top: 1, bottom: 0, sum: true) }
+
+        it { should == [
+          [     0, 0, %w[ø]],
+          [[1, 2], 8, %w[c d e a b]],
+          [     3, 3, %w[f]],
+        ] }
+      end
     end
 
     describe :ratio do

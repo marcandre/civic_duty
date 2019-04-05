@@ -52,6 +52,12 @@ module CivicDuty
     end
 
     def tally_summary
+      organized_tally
+        .map { |nb, objects| "#{nb}: #{summarize_list(objects)}" }
+        .join("\n")
+    end
+
+    private def organized_tally
       regroup(
         results
           .group_by { |obj, nb| nb }
@@ -59,8 +65,6 @@ module CivicDuty
           .sort
       )
         .reverse
-        .map { |nb, objects| "#{nb}: #{summarize_list(objects)}" }
-        .join("\n")
     end
   end
 end

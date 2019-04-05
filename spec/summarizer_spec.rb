@@ -26,14 +26,14 @@ module CivicDuty
         let(:results) { (1..26).to_h { |i| [i, i] } }
         its(:summary) { should == <<-SUMMARY.strip }
 26: 26
-20..25: 20, 21, 22 and 3 more
-14..19: 14, 15, 16 and 3 more
-8..13: 8, 9, 10 and 3 more
-2..7: 2, 3, 4 and 3 more
+20..25: 25, 24, 23 and 3 more
+14..19: 19, 18, 17 and 3 more
+8..13: 13, 12, 11 and 3 more
+2..7: 7, 6, 5 and 3 more
 1: 1
         SUMMARY
         its(:synthesis) { should == results }
-        its(:sorted_tally_values) { should == [26, *20..25, *14..19, *8..13, *2..7, 1]}
+        its(:sorted_tally_values) { should == [*1..26].reverse}
       end
     end
   end

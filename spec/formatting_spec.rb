@@ -25,7 +25,7 @@ module CivicDuty
       its(:last) { should == grouped.to_a.last }
 
       it { merged[1...-1].to_h.should == {
-        :b..:c => [3, 4, 5],
+        :b..:c => [4, 5, 3],
         :d..:d => [7],
       } }
     end

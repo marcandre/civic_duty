@@ -71,7 +71,9 @@ module CivicDuty
     end
 
     private def organized_tally
-      regroup(grouped_results, **group).reverse
+      regroup(grouped_results, **group)
+        .reverse
+        .to_h.transform_keys { |key| combine_list(key) }
     end
 
     def grouped_results

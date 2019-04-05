@@ -54,6 +54,38 @@ module CivicDuty
 
     INITIAL_STAGE = :_started_
 
+    def summary
+      results = task.step_result
+      case result_type(results)
+      when [], {}, NilClass
+        'n/a'
+      when [Node]
+        nodes_summary(results)
+      else
+        results
+      end
+    end
+
+    private def result_type(results)
+      case results
+      when Array
+        return [] if results.empty?
+        return [Node] if results.all?(Node)
+      end
+      results.class
+    end
+
+    CAP_NODES = 3
+    private def nodes_summary(results)
+      remainder = results.size - CAP_NODES
+      results
+        .first(CAP_NODES)
+        .map { |r| r.summary(&project.repository.method(:path_summary)) }
+        .tap { |ary| ary << "and #{remainder} other occurences." if remainder > 0 }
+        .join("\n\n")
+        .<<("\n")
+    end
+
     class << self
       attr_reader :steps, :stages
 

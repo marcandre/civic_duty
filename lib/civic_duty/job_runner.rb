@@ -57,7 +57,7 @@ module CivicDuty
     private def summarizer
       Summarizer.new(
         task.step_result,
-        project.repository.method(:path_summary)
+        path_to_s: project.repository.method(:path_summary)
       )
     end
 

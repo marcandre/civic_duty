@@ -54,12 +54,14 @@ module CivicDuty
 
     INITIAL_STAGE = :_started_
 
-    def summary
+    private def summarizer
       Summarizer.new(
         task.step_result,
         project.repository.method(:path_summary)
-      ).summary
+      )
     end
+
+    delegate :summary, :synthesis, to: :summarizer
 
     class << self
       attr_reader :steps, :stages

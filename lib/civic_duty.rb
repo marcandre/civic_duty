@@ -6,6 +6,7 @@ require 'rubocop'
 require 'set'
 
 require 'backports/2.6.0/kernel/then'
+require 'backports/2.4.0/hash/transform_values'
 
 autoload :Rugged, 'rugged'
 

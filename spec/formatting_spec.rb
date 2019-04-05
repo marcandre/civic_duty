@@ -29,5 +29,17 @@ module CivicDuty
         :d => [7],
       } }
     end
+
+    describe :ratio do
+      {
+        3.666 => "4 %",
+        1.666 => "1.7 %",
+        0.666 => "0.67 %"
+      }.each do |val, expected|
+        it "formats #{val} to #{expected}" do
+          Formatting.ratio(val, 100).should == expected
+        end
+      end
+    end
   end
 end

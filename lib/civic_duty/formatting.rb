@@ -34,6 +34,20 @@ module CivicDuty
         *grouped.last(bottom),
       ]
     end
+
+    def ratio(value, total)
+      percent = value * 100.fdiv(total)
+      round_to = case percent
+      when 3..100
+        0
+      when 1..3
+        1
+      when 0..1
+        2
+      end
+      "#{percent.round(round_to)} %"
+    end
+
     extend self
   end
 end

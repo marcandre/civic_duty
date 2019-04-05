@@ -58,21 +58,14 @@ module CivicDuty
     private def report_success(tasks)
       return section 'Completed:', ['None'] if tasks.empty?
 
-      by_synthesis = tasks
-        .group_by(&:synthesis)
-        .sort
-      by_synthesis = regroup(by_synthesis) if by_synthesis.size > 7
-      by_synthesis = by_synthesis.reverse.to_h
+      s = Summarizer.new(
+        tasks.to_h { |task| [task, task.synthesis] },
+        object_to_s: -> (task) { task.project.name }
+      )
 
-      section 'Completed:',
-        by_synthesis.map { |(index, tasks)|
-          "#{index}: #{summarize_list(project_names(tasks))}"
-        }
+      section 'Completed:', [s.summary]
 
-      by_synthesis.delete(0) # Don't summarize trivial results
-      by_synthesis.delete(nil)
-
-      tasks, extra = shorten_list(by_synthesis.values.flatten)
+      tasks, extra = shorten_list(s.sorted_tally_values)
       summaries = tasks.flat_map { |task| ["* #{task.project.name} *", task.summary] }
 
       section 'Summaries:', [*summaries, *extra]

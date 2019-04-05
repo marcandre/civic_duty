@@ -61,6 +61,8 @@ module CivicDuty
         'n/a'
       when [Node]
         nodes_summary(results)
+      when {Object => Integer}
+        tally_summary(results)
       else
         results
       end
@@ -71,6 +73,9 @@ module CivicDuty
       when Array
         return [] if results.empty?
         return [Node] if results.all?(Node)
+      when Hash
+        return {} if results.empty?
+        return {Object => Integer} if results.values.all?(Integer)
       end
       results.class
     end
@@ -84,6 +89,13 @@ module CivicDuty
         .tap { |ary| ary << "and #{remainder} other occurences." if remainder > 0 }
         .join("\n\n")
         .<<("\n")
+    end
+
+    private def tally_summary(results)
+      results
+        .sort_by{|key, nb| [-nb, key]}
+        .map { |key, value| "#{key}: #{value}" }
+        .join("\n")
     end
 
     class << self

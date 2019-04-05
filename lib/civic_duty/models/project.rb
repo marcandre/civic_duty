@@ -4,6 +4,7 @@ module CivicDuty
     belongs_to :repository
     has_many :dependencies
     has_many :project_dependencies, through: :dependencies, source: :depends_on
+    has_many :tasks
 
     has_many :dependents, foreign_key: :depends_on_id, class_name: 'Dependency'
     has_many :dependent_projects, through: :dependents, source: :project

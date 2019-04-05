@@ -65,6 +65,10 @@ module CivicDuty
         .join("\n")
     end
 
+    def sorted_tally_values
+      organized_tally.flat_map { |_nb, objects| objects }
+    end
+
     private def organized_tally
       regroup(
         results

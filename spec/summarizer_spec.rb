@@ -33,6 +33,7 @@ module CivicDuty
 1: 1
         SUMMARY
         its(:synthesis) { should == results }
+        its(:sorted_tally_values) { should == [26, *20..25, *14..19, *8..13, *2..7, 1]}
       end
     end
   end

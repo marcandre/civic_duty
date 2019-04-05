@@ -62,7 +62,7 @@ module CivicDuty
 
     def tally_summary
       organized_tally
-        .map { |nb, objects| "#{nb}: #{summarize_list(objects, &object_to_s)}" }
+        .map { |nb, objects| "#{combine_list(nb)}: #{summarize_list(objects, &object_to_s)}" }
         .join("\n")
     end
 
@@ -73,7 +73,6 @@ module CivicDuty
     private def organized_tally
       regroup(grouped_results, **group)
         .reverse
-        .to_h.transform_keys { |key| combine_list(key) }
     end
 
     def grouped_results

@@ -61,17 +61,26 @@ module CivicDuty
     end
 
     def tally_summary
-      organized_tally
-        .map { |nb, objects| "#{combine_list(nb)}: #{summarize_list(objects, &object_to_s)}" }
+      tally = organized_tally
+      total = tally.sum { |_nb, sum, _objects| sum }
+      tally.map do |nb, sum, objects|
+        [
+          combine_list(nb),
+          ratio(sum, total),
+          summarize_list(objects, &object_to_s)
+        ]
+      end
+        .map { |values, percent, what| "#{values} (#{percent}): #{what}" }
         .join("\n")
+        .<< "\n#{total}: total"
     end
 
     def sorted_tally_values
-      organized_tally.flat_map { |_nb, objects| objects }
+      organized_tally.flat_map { |_nb, _sum, objects| objects }
     end
 
     private def organized_tally
-      regroup(grouped_results, **group)
+      regroup(grouped_results, **group, sum: true)
         .reverse
     end
 

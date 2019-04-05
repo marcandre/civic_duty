@@ -11,7 +11,8 @@ module CivicDuty
 
     its(:report) { should == <<-REPORT }
 *** Completed: ***
-3: trivial_gem
+3 (100 %): trivial_gem
+3: total
 
 *** Summaries: ***
 * trivial_gem *
@@ -46,22 +47,26 @@ None
       before { job.tasks << job.tasks.first.dup }
       its(:report) { should == <<-REPORT }
 *** Combined: ***
-12: []
-6: [:procarg0]
-2: [:optarg]
+12 (60 %): []
+6 (30 %): [:procarg0]
+2 (10 %): [:optarg]
+20: total
 
 *** Completed: ***
-10: trivial_gem, trivial_gem
+10 (100 %): trivial_gem, trivial_gem
+20: total
 
 *** Summaries: ***
 * trivial_gem *
-6: []
-3: [:procarg0]
-1: [:optarg]
+6 (60 %): []
+3 (30 %): [:procarg0]
+1 (10 %): [:optarg]
+10: total
 * trivial_gem *
-6: []
-3: [:procarg0]
-1: [:optarg]
+6 (60 %): []
+3 (30 %): [:procarg0]
+1 (10 %): [:optarg]
+10: total
 
       REPORT
     end

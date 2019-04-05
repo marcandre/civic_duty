@@ -13,8 +13,9 @@ module CivicDuty
     subject { task }
 
     its(:summary) { should eq <<-SUMMARY.strip }
-2: []
-1: [:arg, :arg], [:procarg0]
+2 (50 %): []
+1 (50 %): [:arg, :arg], [:procarg0]
+4: total
     SUMMARY
 
     its(:synthesis) { should eq({

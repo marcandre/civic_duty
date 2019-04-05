@@ -9,28 +9,31 @@ module CivicDuty
       context "that are simple" do
         let(:results) { {foo: 1, bar: 1, baz: 2} }
         its(:summary) { should == <<-SUMMARY.strip }
-2: baz
-1: bar, foo
+2 (50 %): baz
+1 (50 %): bar, foo
+4: total
         SUMMARY
       end
 
       context "with many common items" do
         let(:results) { (1..26).to_h { |i| [i, 42] }.merge(foo: 666) }
         its(:summary) { should == <<-SUMMARY.strip }
-666: foo
-42: 1, 2, 3 and 23 more
+666 (38 %): foo
+42 (62 %): 1, 2, 3 and 23 more
+1758: total
         SUMMARY
       end
 
       context "with many results" do
         let(:results) { (1..26).to_h { |i| [i, i] } }
         its(:summary) { should == <<-SUMMARY.strip }
-26: 26
-20..25: 25, 24, 23 and 3 more
-14..19: 19, 18, 17 and 3 more
-8..13: 13, 12, 11 and 3 more
-2..7: 7, 6, 5 and 3 more
-1: 1
+26 (7 %): 26
+20..25 (38 %): 25, 24, 23 and 3 more
+14..19 (28 %): 19, 18, 17 and 3 more
+8..13 (18 %): 13, 12, 11 and 3 more
+2..7 (8 %): 7, 6, 5 and 3 more
+1 (0.28 %): 1
+351: total
         SUMMARY
         its(:synthesis) { should == results }
         its(:sorted_tally_values) { should == [*1..26].reverse}

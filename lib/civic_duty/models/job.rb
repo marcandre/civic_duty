@@ -58,8 +58,16 @@ module CivicDuty
     private def report_success(tasks)
       return section 'Completed:', ['None'] if tasks.empty?
 
+      results = tasks.to_h { |task| [task, task.synthesis] }
+
+      if Summarizer.new(results.first.last).result_type == :tally
+        merged = {}.merge!(*results.values) { |k, nb1, nb2| nb1 + nb2 }
+        section 'Combined:', [Summarizer.new(merged).summary]
+        results.transform_values! { |tally| tally.values.sum }
+      end
+
       s = Summarizer.new(
-        tasks.to_h { |task| [task, task.synthesis] },
+        results,
         object_to_s: -> (task) { task.project.name }
       )
 

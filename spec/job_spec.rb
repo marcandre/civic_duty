@@ -39,5 +39,33 @@ None
 
       REPORT
     end
+
+    context "with an tally-type job" do
+      let(:runner_class) { NodeStats }
+      let(:params) { {matcher: Matcher::Node.new('block')} }
+      before { job.tasks << job.tasks.first.dup }
+      its(:report) { should == <<-REPORT.gsub('@','') }
+*** Combined: ***
+12: @
+6: procarg0
+2: optarg
+
+*** Completed: ***
+10: trivial_gem, trivial_gem
+
+*** Summaries: ***
+* trivial_gem *
+6: @
+3: procarg0
+1: optarg
+* trivial_gem *
+6: @
+3: procarg0
+1: optarg
+
+      REPORT
+    end
+
   end
+
 end

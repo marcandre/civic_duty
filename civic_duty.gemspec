@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "sqlite3", "~> 1.3.9" # Avoid issue in Rails
   spec.add_runtime_dependency "thor"
   spec.add_runtime_dependency "with_progress"
-  spec.add_runtime_dependency "backports", ">= 3.12.0"
+  spec.add_runtime_dependency "backports", ">= 3.13.0"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake", "~> 10.0"

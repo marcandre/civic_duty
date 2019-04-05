@@ -62,7 +62,7 @@ module CivicDuty
 
       if Summarizer.new(results.first.last).result_type == :tally
         merged = {}.merge!(*results.values) { |k, nb1, nb2| nb1 + nb2 }
-        section 'Combined:', [Summarizer.new(merged).summary]
+        section 'Combined:', [Summarizer.new(merged, group: {bottom: 8, merge: 1}).summary]
         results.transform_values! { |tally| tally.values.sum }
       end
 

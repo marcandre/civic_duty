@@ -43,7 +43,6 @@ module CivicDuty
         return :none if results.empty?
         return :node_list if results.all?(Node)
       when Hash
-        return :none if results.empty?
         return :tally if results.values.all?(Integer)
       end
       :misc

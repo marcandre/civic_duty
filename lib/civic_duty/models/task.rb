@@ -70,8 +70,7 @@ module CivicDuty
 
     private def _summary
       return nil unless _status == :success
-      result = job_runner.summary if job_runner.respond_to?(:summary)
-      result ||= step_result
+      job_runner.summary
     end
 
     private def _total_elapsed_time

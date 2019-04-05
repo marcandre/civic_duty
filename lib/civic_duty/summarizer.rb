@@ -12,11 +12,11 @@ module CivicDuty
 
     def summary
       case result_type
-      when [], {}, NilClass
+      when :none
         'n/a'
-      when [Node]
+      when :node_list
         nodes_summary
-      when {Object => Integer}
+      when :tally
         tally_summary
       else
         results
@@ -25,11 +25,11 @@ module CivicDuty
 
     def synthesis
       case result_type
-      when [], {}, NilClass
+      when :none
         0
-      when [Node]
+      when :node_list
         results.size
-      when {Object => Integer}
+      when :tally
         results
       else
         nil
@@ -39,13 +39,13 @@ module CivicDuty
     def result_type
       case results
       when Array
-        return [] if results.empty?
-        return [Node] if results.all?(Node)
+        return :none if results.empty?
+        return :node_list if results.all?(Node)
       when Hash
-        return {} if results.empty?
-        return {Object => Integer} if results.values.all?(Integer)
+        return :none if results.empty?
+        return :tally if results.values.all?(Integer)
       end
-      results.class
+      :misc
     end
 
     CAP_NODES = 3

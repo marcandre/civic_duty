@@ -1,6 +1,13 @@
 module CivicDuty
-  class Summarizer < Struct.new(:results, :path_summary_block)
+  class Summarizer
     include Formatting
+
+    attr_reader :results, :path_to_s
+
+    def initialize(results, path_to_s: nil)
+      @results = results
+      @path_to_s = path_to_s
+    end
 
     def summary
       case result_type
@@ -45,7 +52,7 @@ module CivicDuty
       remainder = results.size - CAP_NODES
       results
         .first(CAP_NODES)
-        .map { |r| r.summary(&path_summary_block) }
+        .map { |r| r.summary(&path_to_s) }
         .tap { |ary| ary << "and #{remainder} other occurences." if remainder > 0 }
         .join("\n\n")
         .<<("\n")

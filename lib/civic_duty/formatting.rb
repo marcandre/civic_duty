@@ -11,7 +11,7 @@ module CivicDuty
     def summarize_list(list, ok: 5, cut_to: 3, &block)
       list, extra = shorten_list(list, ok: ok, cut_to: cut_to)
       list.map!(&block) if block
-      "#{list.join(", ")}#{extra}"
+      "#{list.map(&:to_s).join(", ")}#{extra}"
     end
 
     def regroup(grouped, ok: 7, merge: 4)

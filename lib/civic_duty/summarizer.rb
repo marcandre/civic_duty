@@ -2,12 +2,13 @@ module CivicDuty
   class Summarizer
     include Formatting
 
-    attr_reader :results, :path_to_s, :object_to_s
+    attr_reader :results, :path_to_s, :object_to_s, :group
 
-    def initialize(results, path_to_s: nil, object_to_s: nil)
+    def initialize(results, path_to_s: nil, object_to_s: nil, group: {})
       @results = results
       @path_to_s = path_to_s
       @object_to_s = object_to_s
+      @group = group
     end
 
     def summary
@@ -70,7 +71,7 @@ module CivicDuty
     end
 
     private def organized_tally
-      regroup(grouped_results).reverse
+      regroup(grouped_results, **group).reverse
     end
 
     def grouped_results

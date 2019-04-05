@@ -70,13 +70,14 @@ module CivicDuty
     end
 
     private def organized_tally
-      regroup(
-        results
-          .group_by { |obj, nb| nb }
-          .transform_values { |obj_nb_pairs| obj_nb_pairs.map(&:first).sort }
-          .sort
-      )
-        .reverse
+      regroup(grouped_results).reverse
+    end
+
+    def grouped_results
+      results
+        .group_by { |obj, nb| nb }
+        .transform_values { |obj_nb_pairs| obj_nb_pairs.map(&:first).sort }
+        .sort
     end
   end
 end

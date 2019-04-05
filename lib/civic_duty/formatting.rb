@@ -13,7 +13,8 @@ module CivicDuty
       "#{list.join(", ")}#{extra}"
     end
 
-    def regroup(grouped, merge: 3)
+    def regroup(grouped, ok: 7, merge: 4)
+      return grouped if grouped.size <= ok
       n = ((grouped.size - 2).fdiv(merge)).ceil
       grouped = grouped.to_a
       regrouped = grouped[1...-1].each_slice(n).map do |groups|

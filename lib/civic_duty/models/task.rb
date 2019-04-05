@@ -3,12 +3,12 @@ module CivicDuty
     belongs_to :job
     belongs_to :project
     has_many :builds,
-      -> { order(created_at: :desc) },
+      -> { order(:created_at) },
       inverse_of: :task,
       dependent: :delete_all
 
     serialize :synthesis
-    enum status: %i[pending running success failure error]
+    enum status: %i[pending running intermediate_step success failure error]
     symbol_column :stage
 
     def last_build(step = nil)
@@ -31,13 +31,9 @@ module CivicDuty
 
     def run
       while can_run?
-        run_next_step
+        step = job.step_after(stage)
+        run_step(step)
       end
-      self
-    end
-
-    def run_next_step
-      run_step(job.step_after(stage))
       self
     end
 
@@ -60,7 +56,9 @@ module CivicDuty
     end
 
     private def _status
-      last_build&.status || :pending
+      s = last_build&.status || :pending
+      s = :intermediate_step if s == :success && _stage != job.stages.last
+      s
     end
 
     private def _synthesis

@@ -64,6 +64,10 @@ module CivicDuty
       raise NotImplemented
     end
 
+    def current_commit_hash
+      repo.last_commit.oid
+    end
+
     def repo
       begin
         unless path.exist?
@@ -86,7 +90,7 @@ module CivicDuty
 
     def path_summary(path:, from: nil, to: nil)
       relative_path = path.relative_path_from(self.path).to_s
-      url = "#{base_url}/blob/#{branch_name}/#{relative_path}"
+      url = "#{base_url}/blob/#{current_commit_hash}/#{relative_path}"
       if from
         url << "#L#{from}"
         url << "-L#{to}" if to

@@ -59,6 +59,14 @@ module CivicDuty
       CivicDuty.vault_path.join name
     end
 
+    def path_summary(path:, from: nil, to: nil)
+      result = "#{name}.rb"
+      if from
+        result << ":#{from}"
+        result << "-#{to}" if to
+      end
+    end
+
     class << self
       def temp(source)
         require 'tempfile'

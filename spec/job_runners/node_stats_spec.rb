@@ -5,7 +5,7 @@ module CivicDuty
     let(:job) { NodeStats['block'] }
     let(:source) { <<-RUBY }
       foo { |x| }
-      bar { |x, y| }
+      bar { |y, x| }
       baz { }
       baz2 { }
     RUBY
@@ -23,5 +23,13 @@ module CivicDuty
       [:arg, :arg] => 1,
       [:procarg0] => 1,
     }) }
+
+    context 'with store_names enabled' do
+      let(:job) { NodeStats['(block _ (args arg arg) _)', store_names: true] }
+
+      its(:synthesis) { should eq({
+        [:x, :y] => 1,
+      }) }
+    end
   end
 end

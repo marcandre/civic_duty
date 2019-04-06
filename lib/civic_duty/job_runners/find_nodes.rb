@@ -6,8 +6,10 @@ module CivicDuty
       each_node(path).select(&matcher)
     end
 
-    def self.[](pattern)
-      super(matcher: Matcher::Node.new(pattern))
+    class << self
+      def [](pattern, **options)
+        super(matcher: Matcher::Node.new(pattern), **options)
+      end
     end
   end
 end

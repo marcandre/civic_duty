@@ -73,7 +73,7 @@ module CivicDuty
 
       section 'Completed:', [s.summary]
 
-      tasks, extra = shorten_list(s.sorted_tally_values)
+      tasks, extra = shorten_list(s.sorted_tally_values, ok: 10)
       summaries = tasks.flat_map { |task| ["* #{task.project.name} *", task.summary] }
 
       section 'Summaries:', [*summaries, *extra]

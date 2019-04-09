@@ -48,7 +48,7 @@ module CivicDuty
       :misc
     end
 
-    CAP_NODES = 3
+    CAP_NODES = 10
     def nodes_summary
       remainder = results.size - CAP_NODES
       results

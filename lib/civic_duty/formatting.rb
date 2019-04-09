@@ -1,6 +1,6 @@
 module CivicDuty
   module Formatting
-    def shorten_list(list, ok: 5, cut_to: 3)
+    def shorten_list(list, ok: 5, cut_to: ok - 2)
       if list.size > ok
         extra = " and #{list.size - cut_to} more"
         list = list.first(cut_to)

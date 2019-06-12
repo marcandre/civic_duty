@@ -9,10 +9,6 @@ module CivicDuty
   end
 
   Node.include Ext::Node
-  ::RuboCop::NodePattern.prepend Ext::NodePattern
-  class ::RuboCop::NodePattern
-    Compiler.prepend Ext::NodePattern::Compiler
-  end
 
   ::Parser::Source::Buffer.include Ext::SourceBuffer
 end

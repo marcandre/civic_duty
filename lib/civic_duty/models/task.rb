@@ -5,7 +5,7 @@ module CivicDuty
     has_many :builds,
       -> { order(:created_at) },
       inverse_of: :task,
-      dependent: :delete_all
+      dependent: :destroy
 
     serialize :synthesis
     enum status: %i[pending running intermediate_step success failure error]

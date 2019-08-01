@@ -2,7 +2,7 @@ module CivicDuty
   class Job < Model
     include Formatting
 
-    has_many :tasks, dependent: :delete_all
+    has_many :tasks, dependent: :destroy
     serialize :params
 
     delegate :step_after, :stages, to: :runner_class
